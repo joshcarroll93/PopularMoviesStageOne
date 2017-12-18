@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-//                mRecyclerView.setVisibility(View.VISIBLE);
             } else {
                 showErrorMessage();
             }
