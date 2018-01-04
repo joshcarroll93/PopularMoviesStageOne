@@ -1,4 +1,4 @@
-package com.example.josh.popularmoviesstageone;
+package com.example.josh.popularmoviesstageone.activity;
 
 
 import android.support.v7.app.AppCompatActivity;
@@ -7,21 +7,24 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.josh.popularmoviesstageone.R;
 import com.example.josh.popularmoviesstageone.adapter.MovieAdapter;
 import com.example.josh.popularmoviesstageone.data.Movie;
 import com.example.josh.popularmoviesstageone.utils.JsonUtils;
 import com.example.josh.popularmoviesstageone.utils.NetworkUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import org.json.JSONException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,21 +44,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mRecyclerView = findViewById(R.id.my_recycler_view);
-        mLayoutManager = new GridLayoutManager(this, LinearLayoutManager.VERTICAL);
+        mLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        mMovieAdapter = new MovieAdapter(getApplicationContext(), movieList);
-//        mRecyclerView.setAdapter(mMovieAdapter);
+        mMovieAdapter = new MovieAdapter(getApplicationContext(), new ArrayList<Movie>());
+        mRecyclerView.setAdapter(mMovieAdapter);
 
         mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
-        makeMovieSearchQuery();
+        makeMovieSearchQuery(getString(R.string.popular));
     }
 
-    private void makeMovieSearchQuery() {
+    private void makeMovieSearchQuery(String sortBy) {
 
-        URL githubSearchUrl = NetworkUtils.buildUrl();
-        new MovieQuery().execute(githubSearchUrl);
+        URL movieSearchUrl = NetworkUtils.buildUrl(sortBy);
+        new MovieQuery().execute(movieSearchUrl);
     }
 
     private void showJsonDataView() {
@@ -72,6 +75,35 @@ public class MainActivity extends AppCompatActivity {
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+
+        menuInflater.inflate(R.menu.search_type, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if(id == R.id.popular){
+
+            makeMovieSearchQuery(getString(R.string.popular));
+            return true;
+        }
+        if(id == R.id.top_rated){
+
+            makeMovieSearchQuery(getString(R.string.top_rated));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public class MovieQuery extends android.os.AsyncTask<URL, Void, String>{
 
         @Override
@@ -84,15 +116,17 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(URL... urls) {
             Log.d(TAG, "in doInBackground");
+
             URL searchURL = urls[0];
-            String movieQuery = null;
+            Log.i(TAG, searchURL.toString());
+            String movieResults = null;
 
             try{
-                movieQuery = NetworkUtils.getResponseFromHttpUrl(searchURL);
+                movieResults = NetworkUtils.getResponseFromHttpUrl(searchURL);
             }catch (IOException ioe){
                 ioe.printStackTrace();
             }
-            return movieQuery;
+            return movieResults;
         }
 
         @Override
@@ -103,11 +137,13 @@ public class MainActivity extends AppCompatActivity {
             if (movieResults != null && !movieResults.equals("")) {
                 showJsonDataView();
                 Log.d(TAG, movieResults);
-                
+
                 try {
+                    //TODO - possibly do on this on a new thread (causing strain on main thread)
                     movieList = JsonUtils.getMovieStringsFromJson(getApplicationContext(), movieResults);
-                    mMovieAdapter = new MovieAdapter(getApplicationContext(), movieList);
-                    mRecyclerView.setAdapter(mMovieAdapter);
+                    mMovieAdapter.addItems(movieList);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

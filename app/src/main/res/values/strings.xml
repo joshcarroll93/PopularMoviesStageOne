@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">PopularMoviesStageOne</string>
+
+    <string name="title">Title: </string>
+    <string name="Overview">Overview: </string>
+    <string name="vote_average">Vote Average: </string>
+    <string name="release_date">Release Date: </string>
+    <string name="popular">popular</string>
+    <string name="top_rated">top_rated</string>
 </resources>

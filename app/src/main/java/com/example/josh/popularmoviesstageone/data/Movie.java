@@ -14,16 +14,14 @@ public class Movie implements Parcelable{
     private String mPosterPath;
     private String mVoteAverage;
     private String mOverView;
-    private String mBackdrops;
 
-    public Movie(String title, String releaseDate, String posterPath, String voteAverage, String overView, String backDrop){
+    public Movie(String title, String releaseDate, String posterPath, String voteAverage, String overView){
 
         mTitle = title;
         mReleaseDate = releaseDate;
         mPosterPath = posterPath;
         mVoteAverage = voteAverage;
         mOverView = overView;
-        mBackdrops = backDrop;
     }
     private Movie(Parcel parcel){
         mTitle = parcel.readString();
@@ -31,7 +29,6 @@ public class Movie implements Parcelable{
         mPosterPath = parcel.readString();
         mVoteAverage = parcel.readString();
         mOverView = parcel.readString();
-        mBackdrops = parcel.readString();
     }
     public String getTitle() {
         return mTitle;
@@ -75,13 +72,6 @@ public class Movie implements Parcelable{
         mOverView = overView;
     }
 
-    public String getBackdrops() {
-        return mBackdrops;
-    }
-
-    public void setBackdrops(String backdrops) {
-        mBackdrops = backdrops;
-    }
 
     @Override
     public int describeContents() {
@@ -95,7 +85,6 @@ public class Movie implements Parcelable{
         parcel.writeString(mPosterPath);
         parcel.writeString(mVoteAverage);
         parcel.writeString(mOverView);
-        parcel.writeString(mBackdrops);
     }
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override

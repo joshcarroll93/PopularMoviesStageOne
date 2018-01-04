@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="com.example.josh.popularmoviesstageone.activity.MovieDetailActivity">
+
+
+
+   <ImageView
+        android:layout_width="130dp"
+        android:layout_height="180dp"
+        android:id="@+id/id_detail_poster"
+        />
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_title"
+        android:textSize="26sp"
+        android:layout_toEndOf="@+id/id_detail_poster"/>
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_release_date"
+        android:textSize="24sp"
+        android:layout_below="@+id/id_title"
+        android:layout_toEndOf="@+id/id_detail_poster"/>
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_rating"
+        android:textSize="24sp"
+        android:layout_below="@+id/id_release_date"
+        android:layout_toEndOf="@id/id_detail_poster"/>
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_overview"
+        android:textSize="18sp"
+        android:layout_below="@id/id_detail_poster"/>
+
+</RelativeLayout>
