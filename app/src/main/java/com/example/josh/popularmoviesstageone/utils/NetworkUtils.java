@@ -20,7 +20,7 @@ import java.net.URL;
 public class NetworkUtils {
 
     private final static String BASE_URL = "https://api.themoviedb.org/3/movie/";
-    private final static String API_KEY = BuildConfig.GOOGLE_PLACES_VERIFICATION_API_KEY;
+    private final static String API_KEY = BuildConfig.THE_MOVIE_DB_API_KEY;
     private final static String QUERY_APPKEY = "api_key";
 
     final static String MDB_RESULT = "results";

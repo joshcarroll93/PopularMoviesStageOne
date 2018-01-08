@@ -18,7 +18,7 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'GOOGLE_PLACES_VERIFICATION_API_KEY', MY_API_KEY
+        it.buildConfigField 'String', 'THE_MOVIE_DB_API_KEY', MY_API_KEY
     }
 }
 
