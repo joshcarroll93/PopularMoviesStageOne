@@ -1,10 +1,11 @@
 package com.example.josh.popularmoviesstageone.activity;
 
 
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.josh.popularmoviesstageone.R;
 import com.example.josh.popularmoviesstageone.adapter.MovieAdapter;
@@ -31,20 +33,22 @@ public class MainActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
 
-    List<Movie> movieList;
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
     private RecyclerView mRecyclerView;
     private MovieAdapter mMovieAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
+
         mRecyclerView = findViewById(R.id.my_recycler_view);
-        mLayoutManager = new GridLayoutManager(this, 2);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mMovieAdapter = new MovieAdapter(getApplicationContext(), new ArrayList<Movie>());
         mRecyclerView.setAdapter(mMovieAdapter);
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
-        makeMovieSearchQuery(getString(R.string.popular));
+        makeMovieSearchQuery(getString(R.string.popular_api));
     }
 
     private void makeMovieSearchQuery(String sortBy) {
@@ -92,12 +96,16 @@ public class MainActivity extends AppCompatActivity {
 
         if(id == R.id.popular){
 
-            makeMovieSearchQuery(getString(R.string.popular));
+            Toast.makeText(getApplicationContext(),"Popular", Toast.LENGTH_LONG).show();
+            makeMovieSearchQuery(getString(R.string.popular_api));
+
             return true;
         }
         if(id == R.id.top_rated){
 
-            makeMovieSearchQuery(getString(R.string.top_rated));
+            Toast.makeText(getApplicationContext(), "Top Rated", Toast.LENGTH_LONG).show();
+            makeMovieSearchQuery(getString(R.string.top_rated_api));
+
             return true;
         }
 
@@ -140,10 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     //TODO - possibly do on this on a new thread (causing strain on main thread)
-                    movieList = JsonUtils.getMovieStringsFromJson(getApplicationContext(), movieResults);
+                    List<Movie> movieList = JsonUtils.getMovieStringsFromJson(getApplicationContext(), movieResults);
                     mMovieAdapter.addItems(movieList);
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

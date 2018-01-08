@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">PopularMoviesStageOne</string>
-
     <string name="title">Title: </string>
     <string name="Overview">Overview: </string>
     <string name="vote_average">Vote Average: </string>
     <string name="release_date">Release Date: </string>
-    <string name="popular">popular</string>
-    <string name="top_rated">top_rated</string>
+    <string name="popular">Popular</string>
+    <string name="popular_api">popular</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="top_rated_api">top_rated</string>
+    <string name="error_msg">Error Finding Data</string>
 </resources>
