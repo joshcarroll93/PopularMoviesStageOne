@@ -3,10 +3,6 @@ package com.example.josh.popularmoviesstageone.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Josh on 15/12/2017.
- */
-
 public class Movie implements Parcelable{
 
     private String mTitle;

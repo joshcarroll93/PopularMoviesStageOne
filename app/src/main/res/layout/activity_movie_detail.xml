@@ -13,7 +13,7 @@
         android:layout_width="130dp"
         android:layout_height="180dp"
         android:id="@+id/id_detail_poster"
-        />
+       android:contentDescription="@string/movie_detail_poster" />
 
     <TextView
         android:textColor="@color/black"

@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:contentDescription="@string/error_msg"
+        android:contentDescription="@string/movie_detail_poster"
         android:layout_width="match_parent"
         android:adjustViewBounds="true"
         android:layout_height="wrap_content"

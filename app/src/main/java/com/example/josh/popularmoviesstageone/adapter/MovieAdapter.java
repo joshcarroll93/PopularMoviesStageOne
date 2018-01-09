@@ -18,10 +18,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by Josh on 13/12/2017.
- */
-
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private String TAG = getClass().getSimpleName();

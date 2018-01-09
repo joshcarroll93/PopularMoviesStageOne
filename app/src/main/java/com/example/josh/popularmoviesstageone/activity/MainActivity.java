@@ -1,6 +1,7 @@
 package com.example.josh.popularmoviesstageone.activity;
 
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -31,8 +32,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String TAG = getClass().getSimpleName();
-
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
     private RecyclerView mRecyclerView;
@@ -60,22 +59,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeMovieSearchQuery(String sortBy) {
-
         URL movieSearchUrl = NetworkUtils.buildUrl(sortBy);
         new MovieQuery().execute(movieSearchUrl);
     }
 
     private void showJsonDataView() {
-        // First, make sure the error is invisible
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        // Then, make sure the JSON data is visible
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void showErrorMessage() {
-        // First, hide the currently visible data
         mRecyclerView.setVisibility(View.INVISIBLE);
-        // Then, show the error
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
@@ -112,7 +106,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    @SuppressLint("StaticFieldLeak")
     public class MovieQuery extends android.os.AsyncTask<URL, Void, String>{
+
+        String TAG = "MOVIE_QUERY";
+
 
         @Override
         protected void onPreExecute() {
@@ -147,8 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, movieResults);
 
                 try {
-                    //TODO - possibly do on this on a new thread (causing strain on main thread)
-                    List<Movie> movieList = JsonUtils.getMovieStringsFromJson(getApplicationContext(), movieResults);
+                    List<Movie> movieList = JsonUtils.getMovieStringsFromJson(movieResults);
                     mMovieAdapter.addItems(movieList);
                 } catch (JSONException e) {
                     e.printStackTrace();

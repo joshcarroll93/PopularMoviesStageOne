@@ -13,22 +13,18 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by Josh on 13/12/2017.
- */
-
 public class NetworkUtils {
 
     private final static String BASE_URL = "https://api.themoviedb.org/3/movie/";
     private final static String API_KEY = BuildConfig.THE_MOVIE_DB_API_KEY;
-    private final static String QUERY_APPKEY = "api_key";
+    private final static String QUERY_API_KEY = "api_key";
 
     final static String MDB_RESULT = "results";
 
     public static URL buildUrl(String sortBy) {
         Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                 .appendPath(sortBy)
-                .appendQueryParameter(QUERY_APPKEY, API_KEY)
+                .appendQueryParameter(QUERY_API_KEY, API_KEY)
                 .build();
 
         String TAG = "NETWORK_UTILS";
@@ -63,13 +59,10 @@ public class NetworkUtils {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                // Adds '\n' at last line if not already there.
-                // This supposedly makes it easier to debug.
                 builder.append(line).append("\n");
             }
 
             if (builder.length() == 0) {
-                // No data found. Nothing more to do here.
                 return null;
             }
 
@@ -77,7 +70,6 @@ public class NetworkUtils {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } finally {
-            // Tidy up: release url connection and buffered reader
             urlConnection.disconnect();
 
             if (reader != null) {

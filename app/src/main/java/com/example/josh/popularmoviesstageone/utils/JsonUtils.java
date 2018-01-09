@@ -12,9 +12,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Josh on 13/12/2017.
- */
+
 
 public class JsonUtils {
 
@@ -24,13 +22,14 @@ public class JsonUtils {
     private final static String MDB_VOTE_AVERAGE = "vote_average";
     private final static String MDB_OVERVIEW = "overview";
 
-    public static List<Movie> getMovieStringsFromJson(Context context, String movieJsonStr)
+    public static List<Movie> getMovieStringsFromJson(String movieJsonStr)
             throws JSONException {
 
         JSONObject movieJson = new JSONObject(movieJsonStr);
         JSONArray movieArray = movieJson.getJSONArray(NetworkUtils.MDB_RESULT);
 
-        Log.d("OUTPUT", movieArray.toString());
+        String TAG = "JSON_UTILS";
+        Log.d(TAG, movieArray.toString());
 
         List<Movie> movieList = new ArrayList<>();
 
@@ -44,13 +43,7 @@ public class JsonUtils {
             String voteAverage = String.valueOf(jsonMovie.get(MDB_VOTE_AVERAGE));
             String overView = (String)jsonMovie.get(MDB_OVERVIEW);
 
-//            movieList.add(new Movie(
-//                    title,
-//                    releaseDate,
-//                    posterPath,
-//                    voteAverage,
-//                    overView
-//            ));
+
 
             Movie movie = new Movie("",",","","","");
             movie.setTitle(title);
