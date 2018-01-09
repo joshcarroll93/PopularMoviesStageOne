@@ -21,12 +21,13 @@ public class JsonUtils {
     private final static String MDB_POSTER_PATH = "poster_path";
     private final static String MDB_VOTE_AVERAGE = "vote_average";
     private final static String MDB_OVERVIEW = "overview";
+    private final static String MDB_RESULT = "results";
 
     public static List<Movie> getMovieStringsFromJson(String movieJsonStr)
             throws JSONException {
 
         JSONObject movieJson = new JSONObject(movieJsonStr);
-        JSONArray movieArray = movieJson.getJSONArray(NetworkUtils.MDB_RESULT);
+        JSONArray movieArray = movieJson.getJSONArray(MDB_RESULT);
 
         String TAG = "JSON_UTILS";
         Log.d(TAG, movieArray.toString());
@@ -42,8 +43,6 @@ public class JsonUtils {
             String posterPath = (String)jsonMovie.get(MDB_POSTER_PATH);
             String voteAverage = String.valueOf(jsonMovie.get(MDB_VOTE_AVERAGE));
             String overView = (String)jsonMovie.get(MDB_OVERVIEW);
-
-
 
             Movie movie = new Movie("",",","","","");
             movie.setTitle(title);

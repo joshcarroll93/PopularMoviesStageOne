@@ -19,8 +19,6 @@ public class NetworkUtils {
     private final static String API_KEY = BuildConfig.THE_MOVIE_DB_API_KEY;
     private final static String QUERY_API_KEY = "api_key";
 
-    final static String MDB_RESULT = "results";
-
     public static URL buildUrl(String sortBy) {
         Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                 .appendPath(sortBy)
@@ -59,7 +57,7 @@ public class NetworkUtils {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                builder.append(line).append("\n");
+                builder.append(line);
             }
 
             if (builder.length() == 0) {
